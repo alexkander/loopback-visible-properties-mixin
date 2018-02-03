@@ -69,7 +69,7 @@ Add mixin params in in model definition. Example:
     },
   },
   "mixins": {
-    "LoopbackVisiblePropertiesMixin": {
+    "VisibleProperties": {
       "fields": {
         "firstName":   true,
         "lastName":    true,
@@ -93,7 +93,7 @@ You can setup this mixin with a array of visible properties too. Example:
   "name": "Person",
   ...
   "mixins": {
-    "LoopbackVisiblePropertiesMixin": {
+    "VisibleProperties": {
       "fields": [
         "firstName",
         "lastName",
