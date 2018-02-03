@@ -80,14 +80,34 @@ Add mixin params in in model definition. Example:
         "fatherId":    false,
         "siblings":    true,
         "siblingsIds": false,
-        "children":    true,
+        "children":    true
       }
     }
   }
 }
 ```
 
-In the previous configuration, the attributes `id`, `couple` and `coupleId` will not visible in remote responses because they were ignored and `email`, `motherId`, `fatherId` and `siblingsIds` will not visible because they are in `false`.
+You can setup this mixin with a array of visible properties too. Example:
+```
+{
+  "name": "Person",
+  ...
+  "mixins": {
+    "LoopbackVisiblePropertiesMixin": {
+      "fields": [
+        "firstName",
+        "lastName",
+        "mother",
+        "father",
+        "siblings",
+        "children",
+      ]
+    }
+  }
+}
+```
+
+In the previous examples, the attributes `id`, `couple` and `coupleId` will not visible in remote responses because they were ignored and `email`, `motherId`, `fatherId` and `siblingsIds` will not visible because they are in `false`.
 
 ### Troubles
 

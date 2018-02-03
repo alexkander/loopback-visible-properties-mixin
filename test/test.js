@@ -167,7 +167,7 @@ describe('#loopback-visible-properties-mixin', () => {
   });
 
   it('complete uncover code', () => {
-    LoopbackVisiblePropertiesMixin({ definition: {}, settings: { hidden: [] } }, { fields: []});
+    LoopbackVisiblePropertiesMixin({ definition: {}, settings: { hidden: [] } }, { fields: ['name']});
   });
 
   after(() => {
