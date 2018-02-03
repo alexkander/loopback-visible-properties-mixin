@@ -1,0 +1,1 @@
+module.exports = require('./lib/loopback-visible-properties-mixin');
