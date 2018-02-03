@@ -22,26 +22,26 @@ const Person = ds.createModel('Person', {
   email: String,
 }, { plural: 'persons' });
 
-Person.referencesMany(Person, { as: 'sibling', 'foreignKey': 'siblingIds', });
-Person.belongsTo(Person, { as: 'mother', foreignKey: 'motherId' });
-Person.belongsTo(Person, { as: 'father', foreignKey: 'fatherId' });
-Person.belongsTo(Person, { as: 'couple', foreignKey: 'coupleId' });
+Person.referencesMany(Person, { as: 'siblings', 'foreignKey': 'siblingsIds', });
+Person.belongsTo(Person, { as: 'mother' });
+Person.belongsTo(Person, { as: 'father' });
+Person.belongsTo(Person, { as: 'couple' });
 Person.hasMany(Person, { as: 'children', foreignKey: 'motherId' });
 
 LoopbackVisiblePropertiesMixin(Person, {
   fields: {
     // the ame is visible but the email
-    firstName:  true,
-    lastName:   true,
-    email:      false,
+    firstName:   true,
+    lastName:    true,
+    email:       false,
     // make the object visible but not its properties
-    mother:     true,
-    motherId:   false,
-    father:     true,
-    fatherId:   false,
-    sibling:    true,
-    siblingIds: false,
-    children:   true,
+    mother:      true,
+    motherId:    false,
+    father:      true,
+    fatherId:    false,
+    siblings:    true,
+    siblingsIds: false,
+    children:    true,
     // couple relation object and property is hidden because was ignore here.
   }
 });
@@ -64,7 +64,7 @@ describe('#loopback-visible-properties-mixin', () => {
     { firstName: 'Juvenal', lastName: 'Rondon',},
   ];
 
-  const sibling = [];
+  const siblings = [];
 
   before((done) => {
     // Listen on HTTP requests
@@ -79,14 +79,14 @@ describe('#loopback-visible-properties-mixin', () => {
         })
       })
       .then(() => {
-        sibling.push(data[3], data[4], data[5], data[6]);
+        siblings.push(data[3], data[4], data[5], data[6]);
         data[0].motherId = data[1].id;
         data[0].fatherId = data[2].id;
         data[0].coupleId = data[4].id;
         return data[0].save();
       })
-      .then(() => sibling)
-      .mapSeries((item) => data[0].sibling.add(item))
+      .then(() => siblings)
+      .mapSeries((item) => data[0].siblings.add(item))
       .then(() => done());
     });
   });
@@ -119,15 +119,15 @@ describe('#loopback-visible-properties-mixin', () => {
   it('check the seed', (done) => {
     
     Person.findById(data[0].id, {
-      include: ['mother', 'couple', 'sibling', 'father', 'children']
+      include: ['mother', 'couple', 'siblings', 'father', 'children']
     })
     .then((person) => {
       expect(person).to.have.property('id');
       expect(person).to.have.property('firstName');
       expect(person).to.have.property('lastName');
       expect(person).to.have.property('email');
-      expect(person).to.have.property('sibling');
-      expect(person).to.have.property('siblingIds');
+      expect(person).to.have.property('siblings');
+      expect(person).to.have.property('siblingsIds');
       expect(person).to.have.property('mother');
       expect(person).to.have.property('motherId');
       expect(person).to.have.property('father');
@@ -135,8 +135,8 @@ describe('#loopback-visible-properties-mixin', () => {
       expect(person).to.have.property('couple');
       expect(person).to.have.property('coupleId');
       expect(person).to.have.property('children');
-      expect(person.sibling()).to.have.lengthOf(sibling.length);
-      expect(person.siblingIds).to.have.lengthOf(sibling.length);
+      expect(person.siblings()).to.have.lengthOf(siblings.length);
+      expect(person.siblingsIds).to.have.lengthOf(siblings.length);
       done();
     })
   });
@@ -144,7 +144,7 @@ describe('#loopback-visible-properties-mixin', () => {
   it('remove get', (done) => {
     api.get(`/persons/${data[0].id}`)
     .query({
-      filter: { include: ['mother', 'couple', 'sibling', 'father', 'children'] }
+      filter: { include: ['mother', 'couple', 'siblings', 'father', 'children'] }
     })
     .expect(200)
     .then(function(res) {
@@ -152,8 +152,8 @@ describe('#loopback-visible-properties-mixin', () => {
       expect(res.body).to.have.property('firstName');
       expect(res.body).to.have.property('lastName');
       expect(res.body).to.not.have.property('email');
-      expect(res.body).to.have.property('sibling');
-      expect(res.body).to.not.have.property('siblingIds');
+      expect(res.body).to.have.property('siblings');
+      expect(res.body).to.not.have.property('siblingsIds');
       expect(res.body).to.have.property('mother');
       expect(res.body).to.not.have.property('motherId');
       expect(res.body).to.have.property('father');
@@ -161,12 +161,12 @@ describe('#loopback-visible-properties-mixin', () => {
       expect(res.body).to.not.have.property('couple');
       expect(res.body).to.not.have.property('coupleId');
       expect(res.body).to.have.property('children');
-      expect(res.body.sibling).to.have.lengthOf(sibling.length);
+      expect(res.body.siblings).to.have.lengthOf(siblings.length);
       done();
     });
   });
 
-  it('complete uncover code', (done) => {
+  it('complete uncover code', () => {
     LoopbackVisiblePropertiesMixin({ definition: {}, settings: { hidden: [] } }, { fields: []});
   });
 
