@@ -12,7 +12,7 @@ Loopback mixin hidden all models properties and allow setup what should be visib
 
 ## Usage
 
-You must add config setup to `server/model-config.json`.
+Add the mixins property to your `server/model-config.json`:
 
 ```json
 {
@@ -107,7 +107,7 @@ You can setup this mixin with a array of visible properties too. Example:
 }
 ```
 
-In the previous examples, the attributes `id`, `couple` and `coupleId` will not visible in remote responses because they were ignored and `email`, `motherId`, `fatherId` and `siblingsIds` will not visible because they are in `false`.
+In the above definitions, the attributes `id`, `couple` and `coupleId` will not be visible in remote responses because they were ignored and `email`, `motherId`, `fatherId` and `siblingsIds` will not be visible because they were set `false`.
 
 ### Troubles
 

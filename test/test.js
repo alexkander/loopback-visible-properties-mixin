@@ -13,8 +13,8 @@ const LoopbackVisiblePropertiesMixin = require('../visible-properties');
 
 // -----------------------------------------------------------------------------
 // SETUP LOOPBACK SERVER -------------------------------------------------------
-const app    = module.exports = loopback();
-const ds     = loopback.createDataSource('memory');
+const app = module.exports = loopback();
+const ds  = loopback.createDataSource('memory');
 
 const Person = ds.createModel('Person', {
   firstName: String,
