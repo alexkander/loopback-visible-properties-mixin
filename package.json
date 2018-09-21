@@ -1,6 +1,6 @@
 {
   "name": "loopback-visible-properties-mixin",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Loopback mixin hidden all models properties and allow setup what should be visibles.",
   "main": "index.js",
   "scripts": {
