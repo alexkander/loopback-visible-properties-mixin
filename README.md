@@ -109,7 +109,7 @@ You can setup this mixin with a array of visible properties too. Example:
 
 In the above definitions, the attributes `id`, `couple` and `coupleId` will not be visible in remote responses because they were ignored and `email`, `motherId`, `fatherId` and `siblingsIds` will not be visible because they were set `false`.
 
-### Troubles
+## Troubles
 
 If you have any kind of trouble with it, just let me now by raising an issue on the GitHub issue tracker here:
 
